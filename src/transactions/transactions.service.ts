@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Trantaction } from './entities/trantaction.entity';
-// import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { IAcceptanceTokenResponse } from './interfaces/acceptance-token.interface';
@@ -35,8 +35,6 @@ export class TrantactionsService {
     const cardData: ITransactionRequest = { ...createTrantactionDto };
     cardData.acceptance_token = acceptanceToken;
 
-    console.log({ cardData });
-
     try {
       const url = `${process.env.API_WOMPI_URL}/transactions`;
       const {
@@ -49,7 +47,31 @@ export class TrantactionsService {
         }),
       );
 
-      return data;
+      const {
+        amount_in_cents,
+        created_at,
+        status,
+        payment_method_type,
+        customer_email,
+        id,
+      } = data;
+
+      const DTO: CreateTransactionDto = {
+        id,
+        amount_in_cents,
+        created_at,
+        customer_email,
+        payment_method_type,
+        status,
+      };
+
+      const transaction = await this.transactionsRepository.save(DTO);
+      const newStatus = await this.longPollingTransaction(id);
+      console.log({ newStatus });
+      transaction.status = newStatus;
+      await this.transactionsRepository.save(DTO);
+
+      return transaction;
     } catch (error) {
       if (error.response) {
         this.logger.error('API Error:', {
@@ -77,6 +99,15 @@ export class TrantactionsService {
     );
 
     return data;
+  }
+
+  private async longPollingTransaction(id: string) {
+    while (true) {
+      const transaction = await this.findOne(id);
+
+      if (transaction.status === 'APPROVED') return transaction.status;
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    }
   }
 
   private async getAcceptanceToken(): Promise<string> {

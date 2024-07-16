@@ -1,8 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('transactions')
 export class Trantaction {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn('text')
   id: string;
 
   @Column('timestamp')
@@ -11,7 +11,10 @@ export class Trantaction {
   @Column('int')
   amount_in_cents: number;
 
-  @Column('text')
+  @Column('enum', {
+    enum: ['PENDING', 'APPROVED', 'DECLINED', 'ERROR', 'VOIDED'],
+    default: 'PENDING',
+  })
   status: string;
 
   @Column('text')
