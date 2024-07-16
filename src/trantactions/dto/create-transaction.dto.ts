@@ -1,6 +1,6 @@
 import { IsDate, IsPositive, IsString } from 'class-validator';
 
-export class CreateTrantactionDto {
+export class CreateTransactionDto {
   @IsDate()
   created_at: Date;
 

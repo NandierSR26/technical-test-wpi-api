@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Transaction } from 'typeorm';
-import { CreateTrantactionDto } from './dto/create-trantaction.dto';
 import { Trantaction } from './entities/trantaction.entity';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
 
 @Injectable()
 export class TrantactionsService {
@@ -17,7 +17,7 @@ export class TrantactionsService {
     private readonly transactionsRepository: Repository<Trantaction>,
   ) {}
 
-  async create(createTrantactionDto: CreateTrantactionDto) {
+  async create(createTrantactionDto: CreateTransactionDto) {
     try {
       const transaction =
         await this.transactionsRepository.save(createTrantactionDto);
