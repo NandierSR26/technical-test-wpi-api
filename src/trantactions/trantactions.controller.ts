@@ -1,4 +1,11 @@
-import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 import { TrantactionsService } from './trantactions.service';
 // import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { IntegritySignatureInterceptor } from './interceptors/integrity-signature.interceptor';
@@ -17,6 +24,11 @@ export class TrantactionsController {
   @Post('token-card')
   getTokenCard(@Body() cardData: ICardTokenRequest) {
     return this.transactionsService.getCardToken(cardData);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.transactionsService.findOne(id);
   }
 
   // @Get('acceptance-token')

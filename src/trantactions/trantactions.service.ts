@@ -42,7 +42,7 @@ export class TrantactionsService {
       const {
         data: { data },
       } = await firstValueFrom(
-        this.http.post<ITransactionResponse>(url, cardData, {
+        this.http.post(url, cardData, {
           headers: {
             Authorization: `Bearer ${process.env.PUBLIC_API_KEY_WOMPI_SANDBOX}`,
           },
@@ -62,6 +62,21 @@ export class TrantactionsService {
         throw new InternalServerErrorException('Something went wrong');
       }
     }
+  }
+
+  async findOne(id: string) {
+    const url = `${process.env.API_WOMPI_URL}/transactions/${id}`;
+    const {
+      data: { data },
+    } = await firstValueFrom(
+      this.http.get<ITransactionResponse>(url, {
+        headers: {
+          Authorization: `Bearer ${process.env.PUBLIC_API_KEY_WOMPI_SANDBOX}`,
+        },
+      }),
+    );
+
+    return data;
   }
 
   private async getAcceptanceToken(): Promise<string> {
