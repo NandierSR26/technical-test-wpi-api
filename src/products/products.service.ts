@@ -17,6 +17,11 @@ export class ProductsService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
+  async findAll() {
+    const products = await this.productRepository.find();
+    return products;
+  }
+
   async deleteAllProducts() {
     const query = this.productRepository.createQueryBuilder('product');
 
@@ -30,7 +35,10 @@ export class ProductsService {
     }
   }
 
-  async inertProductsList() {
+  async insertProductsList() {
+    const productsDb = await this.findAll();
+    if (productsDb.length) return 'Products already inserted in the database';
+
     const products = initialData.products;
     const insertPromises = [];
 

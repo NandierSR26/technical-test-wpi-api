@@ -6,6 +6,6 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
   @Get('insert')
   instertProducts() {
-    return this.productsService.inertProductsList();
+    return this.productsService.insertProductsList();
   }
 }
