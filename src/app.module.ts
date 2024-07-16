@@ -5,7 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from './products/products.module';
 import { CustomersModule } from './customers/customers.module';
-import { TrantactionsModule } from './trantactions/transactions.module';
+import { TrantactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
