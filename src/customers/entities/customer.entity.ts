@@ -17,10 +17,6 @@ export class Customer {
   @Column('text')
   legal_id: string;
 
-  @Column({
-    type: 'enum',
-    enum: ['CC', 'NIT', 'PP', 'CE', 'TI', 'DNI', 'RG', 'OTHER'],
-    default: 'CC',
-  })
+  @Column('text')
   legal_id_type: string;
 }
