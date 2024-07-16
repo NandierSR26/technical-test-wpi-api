@@ -2,6 +2,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -20,6 +21,13 @@ export class ProductsService {
   async findAll() {
     const products = await this.productRepository.find();
     return products;
+  }
+
+  async findOne(id: string) {
+    const product = await this.productRepository.findOneBy({ id });
+    if (!product) return new NotFoundException(`Product not found`);
+
+    return product;
   }
 
   async deleteAllProducts() {
