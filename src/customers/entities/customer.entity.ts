@@ -8,7 +8,9 @@ export class Customer {
   @Column('text')
   full_name: string;
 
-  @Column('text')
+  @Column('text', {
+    unique: true,
+  })
   email: string;
 
   @Column('text')
