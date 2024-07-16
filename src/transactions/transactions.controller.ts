@@ -6,11 +6,11 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
-import { TrantactionsService } from './trantactions.service';
-// import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { TrantactionsService } from './transactions.service';
 import { IntegritySignatureInterceptor } from './interceptors/integrity-signature.interceptor';
 import { ITransactionRequest } from './interfaces/transaction-request.interface';
 import { ICardTokenRequest } from './interfaces/card-tokens.interface';
+
 @Controller('transactions')
 export class TrantactionsController {
   constructor(private readonly transactionsService: TrantactionsService) {}
@@ -30,9 +30,4 @@ export class TrantactionsController {
   findOne(@Param('id') id: string) {
     return this.transactionsService.findOne(id);
   }
-
-  // @Get('acceptance-token')
-  // async acceptanceToken() {
-  //   return await this.transactionsService.getAcceptanceToken();
-  // }
 }

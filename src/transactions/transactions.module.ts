@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { TrantactionsService } from './trantactions.service';
-import { TrantactionsController } from './trantactions.controller';
+import { TrantactionsService } from './transactions.service';
+import { TrantactionsController } from './transactions.controller';
 import { HttpModule } from '@nestjs/axios';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Trantaction } from './entities/trantaction.entity';
