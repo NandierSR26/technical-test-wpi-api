@@ -1,19 +1,26 @@
-import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
 import { TrantactionsService } from './trantactions.service';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
+// import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { IntegritySignatureInterceptor } from './interceptors/integrity-signature.interceptor';
+import { ITransactionRequest } from './interfaces/transaction-request.interface';
+import { ICardTokenRequest } from './interfaces/card-tokens.interface';
 @Controller('transactions')
 export class TrantactionsController {
   constructor(private readonly transactionsService: TrantactionsService) {}
 
   @Post()
   @UseInterceptors(IntegritySignatureInterceptor)
-  create(@Body() createTransactionsDto: CreateTransactionDto) {
+  create(@Body() createTransactionsDto: ITransactionRequest) {
     return this.transactionsService.create(createTransactionsDto);
   }
 
-  @Get('acceptance-token')
-  async acceptanceToken() {
-    return await this.transactionsService.getAcceptanceToken();
+  @Post('token-card')
+  getTokenCard(@Body() cardData: ICardTokenRequest) {
+    return this.transactionsService.getCardToken(cardData);
   }
+
+  // @Get('acceptance-token')
+  // async acceptanceToken() {
+  //   return await this.transactionsService.getAcceptanceToken();
+  // }
 }
