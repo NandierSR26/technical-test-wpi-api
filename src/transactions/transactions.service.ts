@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Trantaction } from './entities/trantaction.entity';
+import { Transaction } from './entities/transaction.entity';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
@@ -19,12 +19,12 @@ import {
 import { ITransactionResponse } from './interfaces/transactions-response';
 
 @Injectable()
-export class TrantactionsService {
+export class TransactionsService {
   private logger = new Logger('transactionsService');
 
   constructor(
-    @InjectRepository(Trantaction)
-    private readonly transactionsRepository: Repository<Trantaction>,
+    @InjectRepository(Transaction)
+    private readonly transactionsRepository: Repository<Transaction>,
 
     private readonly http: HttpService,
   ) {}
@@ -67,7 +67,7 @@ export class TrantactionsService {
 
       const transaction = await this.transactionsRepository.save(DTO);
       const newStatus = await this.longPollingTransaction(id);
-      console.log({ newStatus });
+
       transaction.status = newStatus;
       await this.transactionsRepository.save(DTO);
 

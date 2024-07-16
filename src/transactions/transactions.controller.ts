@@ -6,14 +6,14 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
-import { TrantactionsService } from './transactions.service';
+import { TransactionsService } from './transactions.service';
 import { IntegritySignatureInterceptor } from './interceptors/integrity-signature.interceptor';
 import { ITransactionRequest } from './interfaces/transaction-request.interface';
 import { ICardTokenRequest } from './interfaces/card-tokens.interface';
 
 @Controller('transactions')
-export class TrantactionsController {
-  constructor(private readonly transactionsService: TrantactionsService) {}
+export class TransactionsController {
+  constructor(private readonly transactionsService: TransactionsService) {}
 
   @Post()
   @UseInterceptors(IntegritySignatureInterceptor)
