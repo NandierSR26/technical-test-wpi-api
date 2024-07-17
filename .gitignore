@@ -3,6 +3,10 @@
 /node_modules
 /build
 
+.env
+postgres
+.vscode
+
 # Logs
 logs
 *.log
