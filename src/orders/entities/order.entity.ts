@@ -36,6 +36,9 @@ export class Order {
   @Column('float')
   total: number;
 
+  @Column('int')
+  product_amount: number;
+
   @ManyToOne(() => Customer, (customer) => customer.orders)
   customer: Customer;
 
