@@ -24,10 +24,14 @@ export class ProductsService {
   }
 
   async findOne(id: string) {
-    const product = await this.productRepository.findOneBy({ id });
-    if (!product) return new NotFoundException(`Product not found`);
+    try {
+      const product = await this.productRepository.findOneBy({ id });
+      if (!product) throw new NotFoundException(`Product not found`);
 
-    return product;
+      return product;
+    } catch (error) {
+      return null;
+    }
   }
 
   async deleteAllProducts() {

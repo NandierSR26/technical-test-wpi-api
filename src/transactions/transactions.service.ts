@@ -87,18 +87,22 @@ export class TransactionsService {
   }
 
   async findOne(id: string) {
-    const url = `${process.env.API_WOMPI_URL}/transactions/${id}`;
-    const {
-      data: { data },
-    } = await firstValueFrom(
-      this.http.get<ITransactionResponse>(url, {
-        headers: {
-          Authorization: `Bearer ${process.env.PUBLIC_API_KEY_WOMPI_SANDBOX}`,
-        },
-      }),
-    );
+    try {
+      const url = `${process.env.API_WOMPI_URL}/transactions/${id}`;
+      const {
+        data: { data },
+      } = await firstValueFrom(
+        this.http.get<ITransactionResponse>(url, {
+          headers: {
+            Authorization: `Bearer ${process.env.PUBLIC_API_KEY_WOMPI_SANDBOX}`,
+          },
+        }),
+      );
 
-    return data;
+      return data;
+    } catch (error) {
+      return null;
+    }
   }
 
   private async longPollingTransaction(id: string) {

@@ -2,9 +2,6 @@ import { IsPositive, IsString, Min } from 'class-validator';
 
 export class CreateOrderDto {
   @IsString()
-  id: string;
-
-  @IsString()
   address_line_1: string;
 
   @IsString()

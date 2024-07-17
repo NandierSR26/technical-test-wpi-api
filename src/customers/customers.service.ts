@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from './entities/customer.entity';
@@ -17,14 +17,20 @@ export class CustomersService {
   }
 
   async findAll() {
-    const customers = await this.customerRepository.find();
-    return customers;
+    try {
+      const customers = await this.customerRepository.find();
+      return customers;
+    } catch (error) {
+      throw new InternalServerErrorException('Something went wrong');
+    }
   }
 
   async findOne(id: string) {
-    const customer = await this.customerRepository.findOneBy({ id });
-    if (!customer) return new NotFoundException('Customer not found');
-
-    return customer;
+    try {
+      const customer = await this.customerRepository.findOneBy({ id });
+      return customer;
+    } catch (error) {
+      throw new InternalServerErrorException('Something went wrong');
+    }
   }
 }
