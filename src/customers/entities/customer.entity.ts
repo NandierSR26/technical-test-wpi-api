@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Order } from 'src/orders/entities/order.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('customers')
 export class Customer {
@@ -21,4 +22,7 @@ export class Customer {
 
   @Column('text')
   legal_id_type: string;
+
+  @OneToMany(() => Order, (order) => order.customer)
+  orders: Order;
 }
