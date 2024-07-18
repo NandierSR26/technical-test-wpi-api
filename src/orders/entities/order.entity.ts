@@ -42,8 +42,7 @@ export class Order {
   @ManyToOne(() => Customer, (customer) => customer.orders)
   customer: Customer;
 
-  @OneToOne(() => Product)
-  @JoinColumn()
+  @ManyToOne(() => Product, (product) => product.orders)
   product: Product;
 
   @OneToOne(() => Transaction)

@@ -12,7 +12,7 @@ export class CustomersService {
   ) {}
 
   async create(createCustomerDto: CreateCustomerDto) {
-    const customerDb = this.customerRepository.findOneBy({
+    const customerDb = await this.customerRepository.findOneBy({
       email: createCustomerDto.email,
     });
     if (customerDb) return customerDb;

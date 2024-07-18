@@ -47,6 +47,15 @@ export class ProductsService {
     }
   }
 
+  async updateProductStock(id: string, purchased: number) {
+    let product = await this.findOne(id);
+    await this.productRepository.update(product.id, {
+      stock: product.stock - purchased,
+    });
+    product = await this.findOne(id);
+    return product;
+  }
+
   async insertProductsList() {
     const productsDb = await this.findAll();
     if (productsDb.length) return 'Products already inserted in the database';

@@ -13,6 +13,7 @@ import { firstValueFrom } from 'rxjs';
 import { IAcceptanceTokenResponse } from './interfaces/acceptance-token.interface';
 import { ITransactionRequest } from './interfaces/transaction-request.interface';
 import {
+  Data,
   ICardTokenRequest,
   ICardTokenResponse,
 } from './interfaces/card-tokens.interface';
@@ -129,7 +130,7 @@ export class TransactionsService {
     }
   }
 
-  async getCardToken(cardDada: ICardTokenRequest): Promise<string> {
+  async getCardToken(cardDada: ICardTokenRequest): Promise<Data> {
     try {
       const url = `${process.env.API_WOMPI_URL}/tokens/cards`;
 
@@ -143,10 +144,10 @@ export class TransactionsService {
         }),
       );
 
-      return data.id;
+      return data;
     } catch (error) {
       this.logger.error(error);
-      return '';
+      throw new InternalServerErrorException(error);
     }
   }
 }

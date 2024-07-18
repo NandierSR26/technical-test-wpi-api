@@ -19,8 +19,6 @@ export class ValidateFieldsInDbPipe implements PipeTransform {
     const transactionDb = await this.transactionsService.findOne(transaction);
     const productDb = await this.productsService.findOne(product);
 
-    console.log({ customerDb, transactionDb, productDb });
-
     if (!customerDb) errors.push('customer not found');
     if (!transactionDb) errors.push('transaction not found');
     if (!productDb) errors.push('product not found');

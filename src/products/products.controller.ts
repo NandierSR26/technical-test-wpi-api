@@ -15,7 +15,7 @@ export class ProductsController {
   }
 
   @Get(':id')
-  findOne(@Param('term', ParseUUIDPipe) id: string) {
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.productsService.findOne(id);
   }
 }
